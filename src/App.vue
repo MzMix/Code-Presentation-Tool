@@ -6,28 +6,81 @@ import 'highlight.js/lib/common';
 const startOfFile = 1;
 
 const fileContent = ref([]);
+const codeToDisplay = ref([]);
 const visibleLines = ref(startOfFile);
 
 let CodeBox;
 
 onMounted(() => {
-  CodeBox = document.getElementById("CodeBox")
+  CodeBox = document.getElementById("CodeBox");
+
+  // window.addEventListener("resize", BreakText());
+
 });
 
 function onFileChange(e) {
+  fileContent.value = [];
   let files = e.target.files || e.dataTransfer.files;
   if (!files.length) return;
   let LoadedFile = files[0];
   ReadFile(LoadedFile);
   visibleLines.value = startOfFile;
 }
+
 function ReadFile(file) {
   let reader = new FileReader();
   reader.onload = e => {
     fileContent.value = e.target.result.split(/\r?\n/);
+    GenerateCodeObjectsAray(fileContent.value);
+    BreakText();
   };
   reader.readAsText(file);
-  console.log(file.type);
+}
+
+function GenerateCodeObjectsAray(code) {
+  let num = 1;
+  code.forEach(cd => {
+    codeToDisplay.value.push({
+      code: cd,
+      lineNum: num,
+      brake: false,
+    })
+    num++;
+  })
+  console.log(codeToDisplay.value);
+}
+
+function BreakText() {
+  GenerateCodeObjectsAray(fileContent.value);
+  //width / 6.5
+  // let threshold = Math.floor(document.getElementById('CodeBox').offsetWidth / 6.5);
+  // console.log(threshold);
+  codeToDisplay.value.forEach(line => {
+    if (line.code.length > 100) SplitLine(line);
+  })
+}
+
+function SplitLine(line) {
+  let part1, part2;
+  let pos = line.code.indexOf(' ', line.code.length / 2);
+
+  part1 = {
+    code: line.code.slice(0, pos),
+    lineNum: line.lineNum,
+    brake: false,
+  }
+
+  part2 = {
+    code: line.code.slice(pos + 1),
+    lineNum: null,
+    brake: true,
+  }
+
+  let start = codeToDisplay.value.indexOf(line);
+  codeToDisplay.value.splice(start, 1, part1, part2);
+
+  // for
+
 }
 
 function showMore() {
@@ -65,9 +118,10 @@ function AddLeadingZero(num) {
         <div class="mb-3">
           <div class="border border-dark p-1" id="CodeBox">
 
-            <span v-for="line in fileContent.slice(0, visibleLines)" :key="fileContent.indexOf(line)" class="line">
-              <span class="line-number user-select-none">{{ AddLeadingZero(fileContent.indexOf(line) + 1) }}</span>
-              <highlightjs language="js" :code=line />
+            <span v-for=" line in codeToDisplay.slice(0, visibleLines)" :key="codeToDisplay.indexOf(line)" class="line">
+              <span v-if="!line.brake" class="line-number user-select-none">{{ AddLeadingZero(line.lineNum) }}</span>
+              <span v-else class="tab user-select-none">--</span>
+              <highlightjs autodetect :code=line.code />
             </span>
 
           </div>
@@ -91,7 +145,8 @@ function AddLeadingZero(num) {
 
   <div class="row fixed-bottom border-dark border-top user-select-none">
     <div class="col-md-12 text-center d-flex justify-content-center align-items-center">
-      <p class="pt-1">Made with <i class="bi bi-heart-fill text-danger"></i> by Mikołaj Zuziak</p>
+      <p class="pt-1">Made with <i class="bi bi-heart-fill text-danger"></i> by <a
+          href="https://github.com/MzMix">Mikołaj Zuziak</a></p>
     </div>
   </div>
 </template>
@@ -114,6 +169,13 @@ function AddLeadingZero(num) {
 
 #ActionButtons {
   justify-content: space-between;
+}
+
+.tab {
+  font-weight: lighter;
+  width: 1.5em;
+  margin-right: .5em;
+  color: transparent;
 }
 
 .line {
