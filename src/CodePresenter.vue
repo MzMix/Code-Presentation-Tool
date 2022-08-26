@@ -7,6 +7,7 @@ const startOfFile = 1;
 
 const fileContent = ref([]);
 const codeToDisplay = ref([]);
+const lang = ref([]);
 const visibleLines = ref(startOfFile);
 
 let CodeBox;
@@ -21,9 +22,20 @@ function onFileChange(e) {
     fileContent.value = [];
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
+
     let LoadedFile = files[0];
     ReadFile(LoadedFile);
+
     visibleLines.value = startOfFile;
+    DetectLang(LoadedFile);
+}
+
+function DetectLang(file) {
+    let fileType = file.type.split('/')[1].split('-');
+    if (fileType.length >= 1) lang.value = fileType[fileType.length - 1];
+    else lang.value = fileType[0];
+
+    console.log(lang.value)
 }
 
 function ReadFile(file) {
@@ -142,7 +154,7 @@ function AddLeadingZero(num) {
                         <span v-if="!line.brake" class="line-number user-select-none">{{ AddLeadingZero(line.lineNum)
                         }}</span>
                         <span v-else class="tab user-select-none">--</span>
-                        <highlightjs lang="python" :code=line.code />
+                        <highlightjs :lang="lang" :code=line.code />
                     </span>
 
                 </div>
