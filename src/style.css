@@ -89,13 +89,7 @@ button:focus-visible {
   }
 }
 
-pre{
-  margin-bottom: 0 !important;
-}
-
-pre code.hljs {
-  padding: 0 !important;
-  /* text-align: justify !important;
-  overflow-x: hidden !important;
-  word-break: break-word !important; */
+.codeLine{
+  margin: 0 !important;
+  padding: .2em !important;
 }
