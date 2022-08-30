@@ -23,5 +23,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <code class="codeLine" :class="langClass">{{       hCode       }}</code>
+    <pre class="codeLine"><code :class="langClass">{{    hCode     }}</code></pre>
 </template>
