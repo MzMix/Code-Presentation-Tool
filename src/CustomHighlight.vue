@@ -1,18 +1,27 @@
 <script setup>
-// import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
+import Prism from "prismjs";
+import "prismjs/themes/prism.css";
 
-defineProps({
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-python';
+
+const props = defineProps({
     hCode: String,
     hLang: String
 })
 
-// onMounted(() => {
-//     document.querySelectorAll('pre code').forEach((el) => {
-//         hljs.highlightElement(el);
-//     });
-// })
+const langClass = computed(() => {
+    return `language-${props.hLang}`;
+})
+
+onMounted(() => {
+    window.Prism = window.Prism || {};
+    window.Prism.manual = true;
+    Prism.highlightAll();
+})
 </script>
 
 <template>
-    <pre><code>{{     props.hCode     }}</code></pre>
+    <code class="codeLine" :class="langClass">{{       hCode       }}</code>
 </template>
