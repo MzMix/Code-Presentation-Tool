@@ -87,7 +87,7 @@ function SplitLine(line) {
 }
 
 function BreakOverflow() {
-    let threshold = Math.floor(document.getElementById('CodeBox').offsetWidth / 8);
+    let threshold = Math.floor(document.getElementById('CodeBox').offsetWidth / 10);
 
     codeToDisplay.value.forEach(line => {
         if (line.code.length > threshold) SplitLine(line);
@@ -143,7 +143,7 @@ function AddLeadingZero(num) {
 </script>
 
 <template>
-    <div class="col-lg-10 col-md-12">
+    <div class="col-xl-8 col-lg-10 col-md-12">
         <form @submit.prevent="onSubmit">
             <div class="mb-3">
                 <div class="border border-dark p-1" id="CodeBox">
@@ -159,16 +159,19 @@ function AddLeadingZero(num) {
                 </div>
             </div>
 
-            <div class=" mb-3 user-select-none">
-                <label for="formFile" class="form-label">Wczytaj plik do wyświetlenia</label>
-                <input class="form-control" type="file" id="formFile" @change="onFileChange">
-            </div>
+            <div class="row">
+                <div class="col-10 mx-auto mb-3 user-select-none">
+                    <label for="formFile" class="form-label">Wczytaj plik do wyświetlenia</label>
+                    <input class="form-control" type="file" id="formFile" @change="onFileChange">
+                </div>
 
-            <div class="mb-3 d-flex" id="ActionButtons">
-                <button class="btn btn-secondary" @click="showLess"><i class="bi bi-arrow-bar-up"></i> Ukryj ostatnią
-                    linijkę</button>
-                <button class="btn btn-primary" @click="showMore">Pokaż następną linijkę <i
-                        class="bi bi-arrow-bar-down"></i></button>
+                <div class="col-10 mx-auto mb-3 d-flex" id="ActionButtons">
+                    <button class="btn btn-secondary" @click="showLess"><i class="bi bi-arrow-bar-up"></i> Ukryj
+                        ostatnią
+                        linijkę</button>
+                    <button class="btn btn-primary" @click="showMore">Pokaż następną linijkę <i
+                            class="bi bi-arrow-bar-down"></i></button>
+                </div>
             </div>
         </form>
     </div>
@@ -223,7 +226,7 @@ function AddLeadingZero(num) {
 }
 
 *::-webkit-scrollbar-track {
-    background: #dde0e3;
+    background: #f5f2f0;
 }
 
 *::-webkit-scrollbar-thumb {
