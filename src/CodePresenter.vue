@@ -1,13 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-
-import 'highlight.js/lib/common';
+import CustomHighlight from './CustomHighlight.vue';
 
 const startOfFile = 1;
 
 const fileContent = ref([]);
 const codeToDisplay = ref([]);
-const lang = ref([]);
+const lang = ref();
 const visibleLines = ref(startOfFile);
 
 let CodeBox;
@@ -35,7 +34,7 @@ function DetectLang(file) {
     if (fileType.length >= 1) lang.value = fileType[fileType.length - 1];
     else lang.value = fileType[0];
 
-    console.log(lang.value)
+    // console.log(lang.value)
 }
 
 function ReadFile(file) {
@@ -151,10 +150,10 @@ function AddLeadingZero(num) {
 
                     <span v-for=" line in codeToDisplay.slice(0, visibleLines)" :key="codeToDisplay.indexOf(line)"
                         class="line">
-                        <span v-if="!line.brake" class="line-number user-select-none">{{ AddLeadingZero(line.lineNum)
-                        }}</span>
+                        <span v-if="!line.brake" class="line-number user-select-none">{{  AddLeadingZero(line.lineNum) 
+                            }}</span>
                         <span v-else class="tab user-select-none">--</span>
-                        <highlightjs :lang="lang" :code=line.code />
+                        <CustomHighlight :hCode="line.code" :hLang="lang" />
                     </span>
 
                 </div>
@@ -182,7 +181,7 @@ function AddLeadingZero(num) {
     max-height: 55vh;
     overflow-y: scroll;
 
-    background-color: #f6f6f6;
+    background-color: #f5f2f0;
     transition: all 0.2s ease-in-out;
 
 }
