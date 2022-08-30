@@ -1,7 +1,20 @@
-# Vue 3 + Vite
+# Description
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Recommended IDE Setup
+This app was created to help with conducting coding classes. It allows uploading a file and display it's content line by line.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+This app is part of a collection of similar tools created to aid in teaching STEAM related subjects.
+
+[All of the apps](https://mzmix.github.io/)
+
+## Credits
+- Coding: Mikołaj Zuziak
+- Testing: Mikołaj Zuziak & Wojciech Zuziak
+  
+
+## Licenses
+
+- [Vue.js](https://vuejs.org/): MIT
+- [PrismJS](https://prismjs.com/): MIT
+- [Bootstrap](https://getbootstrap.com/): MIT
+- [Bootstrap Icons](https://icons.getbootstrap.com/): MIT
